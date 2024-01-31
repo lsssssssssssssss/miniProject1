@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<title>Sign Up</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">Fitness Shop</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+				<li class="nav-item active"><a class="nav-link" href="#">Sign
+						Up</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Products</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container mt-4">
+		<h2>Sign Up</h2>
+		<form name="signup" action="mini_signup_view.jsp">
+			<div class="form-group">
+				<label for="userid">Userid</label> <input type="text"
+					class="form-control" id="userid" placeholder="Enter userid"
+					required>
+				<button type="button" class="btn btn-secondary mt-2"
+					onclick="checkDuplicate()">Check Duplicate</button>
+			</div>
+			<div class="form-group">
+				<label for="username">Username</label> <input type="text"
+					class="form-control" id="username" placeholder="Enter username"
+					required>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label> <input type="password"
+					class="form-control" id="password" placeholder="Enter password"
+					required>
+			</div>
+			<div class="form-group">
+				<label for="password2">Password Confirm</label> <input
+					type="password" class="form-control" id="password2"
+					placeholder="Enter password confirm" required>
+			</div>
+			<div class="form-group">
+				<label for="email">Email</label> <input type="email"
+					class="form-control" id="email" placeholder="Enter email" required>
+			</div>
+			<div class="form-group">
+				<label for="address">Address</label> <input type="text"
+					class="form-control" id="address" placeholder="Enter address">
+				<button type="button" class="btn btn-secondary mt-2"
+					onclick="openDaumPostcode()">Search Address</button>
+			</div>
+			<!-- 추가된 상세주소 입력 input -->
+			<div class="form-group">
+				<label for="detailAddress">Detail Address</label> <input type="text"
+					class="form-control" id="detailAddress"
+					placeholder="Enter detail address">
+			</div>
+			<!-- /추가된 상세주소 입력 input -->
+			<div class="form-group">
+				<label for="phone">Phone</label>
+				<div class="input-group">
+					<input type="tel" class="form-control" id="phone1"
+						placeholder="Enter phone number" maxlength="3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">-</span>
+					</div>
+					<input type="tel" class="form-control" id="phone2"
+						placeholder="Enter phone number" maxlength="4">
+					<div class="input-group-prepend">
+						<span class="input-group-text">-</span>
+					</div>
+					<input type="tel" class="form-control" id="phone3"
+						placeholder="Enter phone number" maxlength="4">
+				</div>
+			</div>
+			<button type="button" class="btn btn-primary" onclick="commit()">Sign
+				Up</button>
+			<a href="#" class="btn btn-secondary ml-2" onclick="login()">Login</a>
+		</form>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script
+		src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		function validatePassword(password) {
+			// 영어, 숫자, 특수문자가 각각 하나 이상 포함하고 최소 10글자 이상 허용하는 정규식
+			/* const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/; */
+			const passwordRegex = /[^a-zA-Z*@$!%*?&]/g;
+			return passwordRegex.test(password);
+		}
+
+		function checkDuplicate() {
+			var userid = document.getElementById('userid').value;
+			if (userid == "" || userid == undefined) {
+				alert("Please enter your ID");
+				return;
+			}
+			if (document.getElementById('userid').getAttribute('disabled') != null) {
+				var pop = window.open("mini_idCheck.jsp?userid=", "idCheck",
+						"width=400,height=400,left=550,top=130");
+			} else {
+				var pop = window.open("mini_idCheck.jsp?userid=" + userid,
+						"idCheck", "width=400,height=400,left=550,top=130");
+			}
+		}
+
+		function openDaumPostcode() {
+			new daum.Postcode({
+				oncomplete : function(data) {
+					document.getElementById('address').value = data.address;
+				}
+			}).open();
+		}
+
+		function validateLogin() {
+			// 패스워드 검증 추가
+			var password = document.getElementById('password').value;
+			if (!validatePassword(password)) {
+				alert("Invalid password. Password must contain at least one each of English letters, numbers, and special characters, and should be at least 10 characters long.");
+				return false;
+			}
+
+			// 패스워드 확인 검증 추가
+			var confirmPassword = document.getElementById('password2').value;
+			if (password !== confirmPassword) {
+				alert("Passwords do not match. Please make sure your passwords match.");
+				return false;
+			}
+
+			// 모든 검증 통과
+			return true;
+		}
+
+		function commit() {
+			if (document.getElementById('userid').getAttribute('disabled') != null) {
+				document.signup.submit();
+			} else {
+				alert("Click the Userid Check Duplicate button");
+				return;
+			}
+		}
+
+		function login() {
+			location.href = "mini_login.jsp";
+		}
+	</script>
+</body>
+</html>
