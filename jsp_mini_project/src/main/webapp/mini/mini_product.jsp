@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,6 @@
     <title>Product Purchase</title>
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Fitness Shop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,19 +33,31 @@
             </ul>
         </div>
     </nav>
+    <%@ include file="dbconn.jsp"%>
+    <%
+        String sql = "SELECT * FROM MINI_PRODUCT";
+        String sql2 = "SELECT REPLACE(PRODUCTNAME,' ','') AS PRODUCTNAME FROM MINI_PRODUCT WHERE PRODUCTID = ?";
+        ResultSet rs = stmt.executeQuery(sql);
 
+        // 값 전달을 위해 productImageName 변수를 사용
+        String productImageName = "";
+    %>
     <div class="container mt-4">
         <h2>Product Purchase</h2>
         <form>
             <div class="form-group">
                 <label for="productName">Product Name</label>
-                <select class="form-control" id="productName" onchange="changeImage()" required>
-                    <option value="Treadmill">Treadmill</option>
-                    <option value="Dumbbell Set">Dumbbell Set</option>
-                    <option value="Yoga Mat">Yoga Mat</option>
-                    <option value="Elliptical Trainer">Elliptical Trainer</option>
-                    <option value="Kettlebell">Kettlebell</option>
-                    <option value="Foam Roller">Foam Roller</option>
+                <select class="form-control" id="productName" onchange="changeImage('<%= productImageName %>')" required>
+                    <%
+                        while(rs.next()){
+                        	PreparedStatement pstmt = conn.prepareStatement(sql2);
+                            pstmt.setInt(1, rs.getInt("PRODUCTID"));
+                            ResultSet rs2 = pstmt.executeQuery(sql2);
+                    %>
+                        <option value="<%= rs.getString("PRODUCTNAME") %>"><%= rs.getString("PRODUCTNAME") %></option>
+                    <%
+                        }
+                    %>
                 </select>
             </div>
             <div class="form-group">
@@ -70,34 +82,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        function changeImage() {
-            var productName = document.getElementById('productName').value;
+        function changeImage(productImageName) {
             var productImage = document.getElementById('productImage');
-            // Set the image source based on the selected product
-            switch (productName) {
-                case 'Treadmill':
-                    productImage.src = '../image/yu.jpg';
-                    break;
-                case 'Dumbbell Set':
-                    productImage.src = 'path/to/dumbbell.jpg';
-                    break;
-                case 'Yoga Mat':
-                    productImage.src = 'path/to/yogamat.jpg';
-                    break;
-                case 'Elliptical Trainer':
-                    productImage.src = 'path/to/elliptical.jpg';
-                    break;
-                case 'Kettlebell':
-                    productImage.src = 'path/to/kettlebell.jpg';
-                    break;
-                case 'Foam Roller':
-                    productImage.src = 'path/to/foamroller.jpg';
-                    break;
-                default:
-                    productImage.src = 'path/to/default.jpg';
-            }
+            productImage.src = 'path/to/' + productImageName + '.jpg';
         }
     </script>
-
 </body>
 </html>

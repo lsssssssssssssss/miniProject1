@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head profile="http://www.w3.org/2005/10/profile">
@@ -19,12 +20,10 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-				<li class="nav-item active"><a class="nav-link" href="#">Sign
-						Up</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Products</a>
-				</li>
+				<li class="nav-item"><a class="nav-link" href="#" onclick="home()">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+				<li class="nav-item active"><a class="nav-link" href="#">Sign Up</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" onclick="login()">Login</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
 			</ul>
 		</div>
@@ -32,7 +31,7 @@
 
 	<div class="container mt-4">
 		<h2>Sign Up</h2>
-		<form name="signup" action="mini_signup_view.jsp">
+		<form name="signup" action="mini_signup_view.jsp" onsubmit="return commit()">
 			<div class="form-group">
 				<label for="userid">Userid</label> <input type="text"
 					class="form-control" name="userid" id="userid" placeholder="Enter userid"
@@ -87,8 +86,7 @@
 						placeholder="Enter phone number" maxlength="4">
 				</div>
 			</div>
-			<button type="button" class="btn btn-primary" onclick="commit()">Sign
-				Up</button>
+			<button type="submit" class="btn btn-primary">Sign Up</button>
 			<a href="#" class="btn btn-secondary ml-2" onclick="login()">Login</a>
 		</form>
 	</div>
@@ -131,16 +129,23 @@
 		}
 
 		function validateLogin() {
+			var userid = document.getElementById('userid').value;
+	        var username = document.getElementById('username').value;
+	        var password = document.getElementById('password').value;
+	        var password2 = document.getElementById('password2').value;
+	        var email = document.getElementById('email').value;
+	        if(userid == "" || username == "" || password == "" 
+	        		|| password2 == "" || email == "") {
+	        	return false;
+	        }
 			// 패스워드 검증 추가
-			var password = document.getElementById('password').value;
 			if (!validatePassword(password)) {
 				alert("Invalid password. Password must contain at least one each of English letters, numbers, and special characters, and should be at least 10 characters long.");
 				return false;
 			}
 
 			// 패스워드 확인 검증 추가
-			var confirmPassword = document.getElementById('password2').value;
-			if (password !== confirmPassword) {
+			if (password !== password2) {
 				alert("Passwords do not match. Please make sure your passwords match.");
 				return false;
 			}
@@ -154,15 +159,22 @@
 			if(validateLogin()){
 			    if (isDuplicate) {
 			    	document.getElementById('userid').removeAttribute('disabled');
-			        document.signup.submit();
+			        return true;
 			    } else {
 			        alert("Click the Userid Check Duplicate button");
+			       	return false;
 			    }
+			} else {
+				return false;
 			}
 		}
 
 		function login() {
 			location.href = "mini_login.jsp";
+		}
+		
+		function home() {
+			location.href = "mini_home.jsp";
 		}
 	</script>
 </body>

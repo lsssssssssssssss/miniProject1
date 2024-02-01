@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,13 +20,7 @@
     </style>
 </head>
 <body>
-	<%-- <%
-		if(session == null || session.getAttribute("userid") == null || !request.isRequestedSessionIdValid()){
-			out.println("세션없다");
-		} else {
-			out.println(session.getAttribute("userid"));
-		}
-	%> --%>
+	<%@ include file="dbconn.jsp" %>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Fitness Shop</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,11 +35,23 @@
                 <a class="nav-link" href="#">Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Sign Up</a>
+                <a class="nav-link" href="#" onclick="add()">Sign Up</a>
             </li>
+    <%
+		if (session != null && session.getAttribute("userid") != null) {
+	%>
             <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
+                <a class="nav-link" href="#" onclick="logout()">Logout</a>
             </li>
+    <%
+		} else {
+	%>
+			<li class="nav-item">
+                <a class="nav-link" href="#" onclick="login()">Login</a>
+            </li>
+	<%
+		}
+	%>
             <li class="nav-item">
                 <a class="nav-link" href="#">Cart</a>
             </li>
@@ -112,6 +120,18 @@
         });
     });
 </script>
-
+<script>
+    function logout() {
+        location.href = "mini_logout.jsp";
+    }
+    
+    function login() {
+    	location.href = "mini_login.jsp";
+    }
+    
+    function add() {
+    	location.href = "mini_signup.jsp";
+    }
+</script>
 </body>
 </html>
