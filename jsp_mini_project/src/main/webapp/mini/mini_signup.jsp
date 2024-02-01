@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head profile="http://www.w3.org/2005/10/profile">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet"
@@ -35,19 +35,19 @@
 		<form name="signup" action="mini_signup_view.jsp">
 			<div class="form-group">
 				<label for="userid">Userid</label> <input type="text"
-					class="form-control" id="userid" placeholder="Enter userid"
+					class="form-control" name="userid" id="userid" placeholder="Enter userid"
 					required>
 				<button type="button" class="btn btn-secondary mt-2"
 					onclick="checkDuplicate()">Check Duplicate</button>
 			</div>
 			<div class="form-group">
 				<label for="username">Username</label> <input type="text"
-					class="form-control" id="username" placeholder="Enter username"
+					class="form-control" name="username" id="username" placeholder="Enter username"
 					required>
 			</div>
 			<div class="form-group">
 				<label for="password">Password</label> <input type="password"
-					class="form-control" id="password" placeholder="Enter password"
+					class="form-control" name="password" id="password" placeholder="Enter password"
 					required>
 			</div>
 			<div class="form-group">
@@ -57,35 +57,33 @@
 			</div>
 			<div class="form-group">
 				<label for="email">Email</label> <input type="email"
-					class="form-control" id="email" placeholder="Enter email" required>
+					class="form-control" name="email" id="email" placeholder="Enter email" required>
 			</div>
 			<div class="form-group">
 				<label for="address">Address</label> <input type="text"
-					class="form-control" id="address" placeholder="Enter address">
+					class="form-control" name="address" id="address" placeholder="Enter address">
 				<button type="button" class="btn btn-secondary mt-2"
 					onclick="openDaumPostcode()">Search Address</button>
 			</div>
-			<!-- 추가된 상세주소 입력 input -->
 			<div class="form-group">
 				<label for="detailAddress">Detail Address</label> <input type="text"
-					class="form-control" id="detailAddress"
+					class="form-control" name="detailAddress" id="detailAddress"
 					placeholder="Enter detail address">
 			</div>
-			<!-- /추가된 상세주소 입력 input -->
 			<div class="form-group">
 				<label for="phone">Phone</label>
 				<div class="input-group">
-					<input type="tel" class="form-control" id="phone1"
+					<input type="tel" class="form-control" name="phone1" id="phone1"
 						placeholder="Enter phone number" maxlength="3">
 					<div class="input-group-prepend">
 						<span class="input-group-text">-</span>
 					</div>
-					<input type="tel" class="form-control" id="phone2"
+					<input type="tel" class="form-control" name="phone2" id="phone2"
 						placeholder="Enter phone number" maxlength="4">
 					<div class="input-group-prepend">
 						<span class="input-group-text">-</span>
 					</div>
-					<input type="tel" class="form-control" id="phone3"
+					<input type="tel" class="form-control" name="phone3" id="phone3"
 						placeholder="Enter phone number" maxlength="4">
 				</div>
 			</div>
@@ -105,8 +103,7 @@
 	<script>
 		function validatePassword(password) {
 			// 영어, 숫자, 특수문자가 각각 하나 이상 포함하고 최소 10글자 이상 허용하는 정규식
-			/* const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/; */
-			const passwordRegex = /[^a-zA-Z*@$!%*?&]/g;
+			const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
 			return passwordRegex.test(password);
 		}
 
@@ -153,11 +150,14 @@
 		}
 
 		function commit() {
-			if (document.getElementById('userid').getAttribute('disabled') != null) {
-				document.signup.submit();
-			} else {
-				alert("Click the Userid Check Duplicate button");
-				return;
+		    var isDuplicate = document.getElementById('userid').getAttribute('disabled') !== null;
+			if(validateLogin()){
+			    if (isDuplicate) {
+			    	document.getElementById('userid').removeAttribute('disabled');
+			        document.signup.submit();
+			    } else {
+			        alert("Click the Userid Check Duplicate button");
+			    }
 			}
 		}
 

@@ -49,7 +49,7 @@
 </html>
 <script>
 	function popClose(userid){
-		opener.document.signup.userid.value = userid;
+		opener.document.getElementById('userid').value = userid;
 		opener.document.getElementById('userid').setAttribute('disabled', 'disabled');
 		window.close();
 	}
