@@ -61,8 +61,6 @@
         ResultSet rs2;
         // 값 전달을 위해 productImageName 변수를 사용
         String productImageName = "";
-        int price;
-        int stockquantity;
     %>
     <div class="container mt-4">
         <h2>Product Purchase</h2>
@@ -72,13 +70,13 @@
                 <select class="form-control" id="productName" onchange="changeImage(); totalPrice(); updateStockQuantity()">
                     <%
                         while(rs.next()){
-                        	PreparedStatement pstmt = conn.prepareStatement("SELECT REPLACE(TRIM(PRODUCTNAME),' ','') AS PRODUCTNAME, PRICE, STOCKQUANTITY FROM MINI_PRODUCT WHERE PRODUCTID = ?");
+                        	PreparedStatement pstmt = conn.prepareStatement("SELECT REPLACE(TRIM(PRODUCTNAME),' ','') AS PRODUCTNAME, PRICE, STOCKQUANTITY, PRODUCTID FROM MINI_PRODUCT WHERE PRODUCTID = ?");
                             pstmt.setInt(1, rs.getInt("PRODUCTID"));
                             rs2 = pstmt.executeQuery();
                             if(rs2.next()){
                                 productImageName = rs2.getString("PRODUCTNAME");   
                     %>
-                        <option value="<%= productImageName %>" <%= rs.getString("PRODUCTNAME").equals("Treadmill") ? "selected" : "" %> data-price="<%= rs2.getInt("PRICE") %>" data-stockquantity="<%= rs2.getInt("STOCKQUANTITY") %>"><%= rs.getString("PRODUCTNAME") %></option>
+                        <option value="<%= productImageName %>" <%= rs.getString("PRODUCTNAME").equals("Treadmill") ? "selected" : "" %> data-price="<%= rs.getInt("PRICE") %>" data-stockquantity="<%= rs2.getInt("STOCKQUANTITY") %>" data-productid="<%= rs2.getInt("PRODUCTID") %>"><%= rs.getString("PRODUCTNAME") %></option>
                     <%
                         	}
                         }
@@ -101,6 +99,7 @@
                 <label for="stockQuantity">Stock Quantity</label>
                 <span id="stockQuantity">0</span>
             </div>
+            <input type="text" id="productid" hidden>
             <button type="submit" class="btn btn-primary">Purchase</button>
             <a href="#" class="btn btn-success ml-2" onclick="addCart()">Add to Cart</a>
         </form>
@@ -122,9 +121,11 @@
             var productImage = document.getElementById('productImage');
             var selectedOption = productName.options[productName.selectedIndex];
             var productImageName = selectedOption.value;
-
+			// PRODUCTID값 저장
+			var productid = document.getElementById('productid');
             // 이미지 경로를 동적으로 설정
             productImage.src = 'image/' + productImageName + '.jpg';
+            productid.value = selectedOption.getAttribute('data-productid');
         }
         
         function totalPrice() {
@@ -166,12 +167,19 @@
         	var productName = document.getElementById('productName');
             var quantity = document.getElementById('quantity').value;
             var stockQuantity = document.getElementById('stockQuantity').innerText;
+            var selectedOption = productName.options[productName.selectedIndex];
+            
+            var confirmation = confirm('Do you want to add this item to your cart?');
 
-            if (parseInt(quantity) > parseInt(stockQuantity)) {
-                alert('Cannot purchase more than available stock.');
+            if (confirmation) {
+	            if (parseInt(quantity) > parseInt(stockQuantity)) {
+	                alert('Cannot purchase more than available stock.');
+	                return;
+	            }
+	            location.href = "mini_product_cart.jsp?productid="+document.getElementById('productid').value+"&quantity="+document.getElementById('quantity').value+"&totalamount="+selectedOption.getAttribute('data-price');
+            } else {
                 return;
             }
-            location.href = "mini_cart.jsp";
         }
         
         function home(){
@@ -185,6 +193,9 @@
         }
         function login(){
         	location.href = "mini_login.jsp";
+        }
+        function logout(){
+        	location.href = "mini_logout.jsp";
         }
         function cart(){
         	location.href = "mini_cart.jsp";

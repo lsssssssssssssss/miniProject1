@@ -42,7 +42,25 @@
             </ul>
         </div>
     </nav>
-
+	<%@ include file="dbconn.jsp"%>
+    <%
+    	int idx = 1;
+    	String userid = (String)session.getAttribute("userid");
+    	if(userid == null || userid.trim().isEmpty()) {
+   	%>
+       <script>
+           function noCart() {
+               alert("Please use it after logging in.");
+               location.href = "mini_login.jsp";
+           }
+           noCart();
+       </script>
+   	<%
+    	} else {
+	        String sql = "SELECT PRODUCTNAME, QUANTITY, PRICE, TOTALAMOUNT  FROM MINI_CART C INNER JOIN MINI_PRODUCT P ON c.productid = p.productid WHERE USERID = '" + userid + "'";
+	        ResultSet rs = stmt.executeQuery(sql);
+    	}
+    %>
     <!-- Your Cart Content Goes Here -->
     <div class="container">
         <h2 class="text-center mb-4">Your Shopping Cart</h2>
@@ -54,22 +72,47 @@
                     <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
                     <th scope="col">Total Price</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Example row, replace with actual cart data -->
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row"><%= idx++ %></th>
                     <td>Treadmill</td>
                     <td>2</td>
                     <td>$500</td>
                     <td>$1000</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
         <div class="text-right">
             <p class="font-weight-bold">Total: $1000</p>
             <button class="btn btn-primary">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Modal for Confirm Delete -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this item from your cart?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
         </div>
     </div>
 
