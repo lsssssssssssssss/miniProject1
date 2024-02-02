@@ -21,10 +21,29 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link" href="#" onclick="home()">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-				<li class="nav-item active"><a class="nav-link" href="#">Sign Up</a></li>
-				<li class="nav-item"><a class="nav-link" href="#" onclick="login()">Login</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" onclick="products()">Products</a></li>
+				<li class="nav-item active"><a class="nav-link" href="#" onclick="signup()">Sign Up</a></li>
+				<%
+					if (session != null && session.getAttribute("userid") != null) {
+				%>
+			            <li class="nav-item">
+			                <a class="nav-link" href="#" onclick="logout()">Logout</a>
+			            </li>
+			            <li class="nav-item">
+			                <a class="nav-link" href="#" onclick="cart()">Cart</a>
+			            </li>
+			    <%
+					} else {
+				%>
+						<li class="nav-item">
+			                <a class="nav-link" href="#" onclick="login()">Login</a>
+			            </li>
+			            <li class="nav-item">
+			                <a class="nav-link" href="#" onclick="noCart()">Cart</a>
+			            </li>
+				<%
+					}
+				%>
 			</ul>
 		</div>
 	</nav>
@@ -169,13 +188,29 @@
 			}
 		}
 
-		function login() {
-			location.href = "mini_login.jsp";
-		}
-		
-		function home() {
-			location.href = "mini_home.jsp";
-		}
+		function home(){
+        	location.href = "mini_home.jsp";
+        }
+        function products(){
+        	location.href = "mini_product.jsp";
+        }
+        function signup(){
+        	location.href = "mini_signup.jsp";
+        }
+        function login(){
+        	location.href = "mini_login.jsp";
+        }
+        function logout() {
+        	alert("You have been logged out.");
+            location.href = "mini_logout.jsp";
+        }
+        function cart(){
+        	location.href = "mini_cart.jsp";
+        }
+        function noCart() {
+        	alert("Please use it after logging in.");
+        	location.href = "mini_login.jsp";
+        }
 	</script>
 </body>
 </html>

@@ -20,17 +20,29 @@
                     <a class="nav-link" href="#" onclick="home()">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
+                    <a class="nav-link" href="#" onclick="products()">Products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="add()">Sign Up</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" onclick="login()">Login <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Cart</a>
-                </li>
+                <%
+					if (session != null && session.getAttribute("userid") != null) {
+				%>
+			            <li class="nav-item">
+			                <a class="nav-link" href="#" onclick="cart()">Cart</a>
+			            </li>
+			    <%
+					} else {
+				%>
+			            <li class="nav-item">
+			                <a class="nav-link" href="#" onclick="noCart()">Cart</a>
+			            </li>
+				<%
+					}
+				%>
             </ul>
         </div>
     </nav>
@@ -58,6 +70,23 @@
 		
 		function add() {
 	    	location.href = "mini_signup.jsp";
+	    }
+		
+		function products() {
+			location.href = "mini_product.jsp";
+		}
+		
+		function login() {
+			location.href = "mini_login.jsp";
+		}
+		
+		function cart() {
+	    	location.href = "mini_cart.jsp";
+	    }
+	    
+	    function noCart() {
+	    	alert("Please use it after logging in.");
+	    	location.href = "mini_login.jsp";
 	    }
 	</script>
 </body>

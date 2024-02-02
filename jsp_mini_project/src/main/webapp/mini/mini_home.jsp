@@ -32,7 +32,7 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Products</a>
+                <a class="nav-link" href="#" onclick="products()">Products</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="add()">Sign Up</a>
@@ -43,18 +43,21 @@
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="logout()">Logout</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="cart()">Cart</a>
+            </li>
     <%
 		} else {
 	%>
 			<li class="nav-item">
                 <a class="nav-link" href="#" onclick="login()">Login</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="noCart()">Cart</a>
+            </li>
 	<%
 		}
 	%>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Cart</a>
-            </li>
         </ul>
     </div>
 </nav>
@@ -66,7 +69,7 @@
         <p class="lead">Explore our high-quality fitness equipment to stay fit and healthy.</p>
         <hr class="my-4">
         <p>Check out our latest products and start your fitness journey today.</p>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Explore Products</a>
+        <a class="btn btn-primary btn-lg" href="#" role="button" onclick="products()">Explore Products</a>
     </div>
 
     <!-- Carousel -->
@@ -122,6 +125,7 @@
 </script>
 <script>
     function logout() {
+    	alert("You have been logged out.");
         location.href = "mini_logout.jsp";
     }
     
@@ -131,6 +135,19 @@
     
     function add() {
     	location.href = "mini_signup.jsp";
+    }
+    
+    function products() {
+    	location.href = "mini_product.jsp";
+    }
+    
+    function cart() {
+    	location.href = "mini_cart.jsp";
+    }
+    
+    function noCart() {
+    	alert("Please use it after logging in.");
+    	location.href = "mini_login.jsp";
     }
 </script>
 </body>

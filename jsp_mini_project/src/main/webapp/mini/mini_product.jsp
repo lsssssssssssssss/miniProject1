@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Product Purchase</title>
+    <style>
+    #productImage {
+        width: 200px;
+        height: auto;
+    }
+	</style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,64 +22,87 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="#" onclick="home()">Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Products <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" onclick="products()">Products <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sign Up</a>
+                    <a class="nav-link" href="#" onclick="signup()">Sign Up</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Cart</a>
-                </li>
+                <%
+					if (session != null && session.getAttribute("userid") != null) {
+				%>
+			            <li class="nav-item">
+			                <a class="nav-link" href="#" onclick="logout()">Logout</a>
+			            </li>
+			            <li class="nav-item">
+			                <a class="nav-link" href="#" onclick="cart()">Cart</a>
+			            </li>
+			    <%
+					} else {
+				%>
+						<li class="nav-item">
+			                <a class="nav-link" href="#" onclick="login()">Login</a>
+			            </li>
+			            <li class="nav-item">
+			                <a class="nav-link" href="#" onclick="noCart()">Cart</a>
+			            </li>
+				<%
+					}
+				%>
             </ul>
         </div>
     </nav>
     <%@ include file="dbconn.jsp"%>
     <%
         String sql = "SELECT * FROM MINI_PRODUCT";
-        String sql2 = "SELECT REPLACE(PRODUCTNAME,' ','') AS PRODUCTNAME FROM MINI_PRODUCT WHERE PRODUCTID = ?";
         ResultSet rs = stmt.executeQuery(sql);
-
+        ResultSet rs2;
         // 값 전달을 위해 productImageName 변수를 사용
         String productImageName = "";
+        int price;
+        int stockquantity;
     %>
     <div class="container mt-4">
         <h2>Product Purchase</h2>
-        <form>
+        <form name="product" action="mini_order.jsp" onsubmit="return purchase()">
             <div class="form-group">
                 <label for="productName">Product Name</label>
-                <select class="form-control" id="productName" onchange="changeImage('<%= productImageName %>')" required>
+                <select class="form-control" id="productName" onchange="changeImage(); totalPrice(); updateStockQuantity()">
                     <%
                         while(rs.next()){
-                        	PreparedStatement pstmt = conn.prepareStatement(sql2);
+                        	PreparedStatement pstmt = conn.prepareStatement("SELECT REPLACE(TRIM(PRODUCTNAME),' ','') AS PRODUCTNAME, PRICE, STOCKQUANTITY FROM MINI_PRODUCT WHERE PRODUCTID = ?");
                             pstmt.setInt(1, rs.getInt("PRODUCTID"));
-                            ResultSet rs2 = pstmt.executeQuery(sql2);
+                            rs2 = pstmt.executeQuery();
+                            if(rs2.next()){
+                                productImageName = rs2.getString("PRODUCTNAME");   
                     %>
-                        <option value="<%= rs.getString("PRODUCTNAME") %>"><%= rs.getString("PRODUCTNAME") %></option>
+                        <option value="<%= productImageName %>" <%= rs.getString("PRODUCTNAME").equals("Treadmill") ? "selected" : "" %> data-price="<%= rs2.getInt("PRICE") %>" data-stockquantity="<%= rs2.getInt("STOCKQUANTITY") %>"><%= rs.getString("PRODUCTNAME") %></option>
                     <%
+                        	}
                         }
                     %>
                 </select>
             </div>
             <div class="form-group">
                 <label for="productImage">Product Image</label>
-                <img id="productImage" src="path/to/default.jpg" alt="Product Image" class="img-fluid mb-2">
+                <img id="productImage" src="image/Treadmill.jpg" alt="Product Image" class="img-fluid mb-2">
             </div>
             <div class="form-group">
                 <label for="quantity">Quantity</label>
-                <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" required>
+                <input type="number" min="1" class="form-control" id="quantity" placeholder="1" required value="1" onchange="totalPrice()">
             </div>
             <div class="form-group">
                 <label for="totalAmount">Total Amount</label>
-                <input type="text" class="form-control" id="totalAmount" value="$1,000,000" readonly>
+                <input type="text" class="form-control" id="totalAmount" value="$0" readonly>
+            </div>
+            <div class="form-group">
+                <label for="stockQuantity">Stock Quantity</label>
+                <span id="stockQuantity">0</span>
             </div>
             <button type="submit" class="btn btn-primary">Purchase</button>
-            <a href="#" class="btn btn-success ml-2">Add to Cart</a>
+            <a href="#" class="btn btn-success ml-2" onclick="addCart()">Add to Cart</a>
         </form>
     </div>
 
@@ -82,9 +111,87 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        function changeImage(productImageName) {
+    	document.addEventListener("DOMContentLoaded", function() {
+        	changeImage();
+        	totalPrice();
+        	updateStockQuantity();
+    	});
+    	
+        function changeImage() {
+            var productName = document.getElementById('productName');
             var productImage = document.getElementById('productImage');
-            productImage.src = 'path/to/' + productImageName + '.jpg';
+            var selectedOption = productName.options[productName.selectedIndex];
+            var productImageName = selectedOption.value;
+
+            // 이미지 경로를 동적으로 설정
+            productImage.src = 'image/' + productImageName + '.jpg';
+        }
+        
+        function totalPrice() {
+        	var productName = document.getElementById('productName');
+            var quantity = document.getElementById('quantity').value;
+            var totalAmountField = document.getElementById('totalAmount');
+            
+            var selectedOption = productName.options[productName.selectedIndex];
+            var price = selectedOption.getAttribute('data-price');
+            
+            var totalAmount = parseInt(quantity) * parseInt(price);
+            totalAmountField.value = '$' + totalAmount.toLocaleString();
+        }
+        
+        function updateStockQuantity() {
+            var productName = document.getElementById('productName');
+            var stockQuantityField = document.getElementById('stockQuantity');
+
+            var selectedOption = productName.options[productName.selectedIndex];
+            var stockQuantity = selectedOption.getAttribute('data-stockquantity');
+
+            stockQuantityField.innerText = stockQuantity;
+        }
+        
+        function purchase() {
+            var productName = document.getElementById('productName');
+            var quantity = document.getElementById('quantity').value;
+            var stockQuantity = document.getElementById('stockQuantity').innerText;
+
+            if (parseInt(quantity) > parseInt(stockQuantity)) {
+                alert('Cannot purchase more than available stock.');
+                return false;
+            }
+
+            return true;
+        }
+        
+        function addCart(){
+        	var productName = document.getElementById('productName');
+            var quantity = document.getElementById('quantity').value;
+            var stockQuantity = document.getElementById('stockQuantity').innerText;
+
+            if (parseInt(quantity) > parseInt(stockQuantity)) {
+                alert('Cannot purchase more than available stock.');
+                return;
+            }
+            location.href = "mini_cart.jsp";
+        }
+        
+        function home(){
+        	location.href = "mini_home.jsp";
+        }
+        function products(){
+        	location.href = "mini_product.jsp";
+        }
+        function signup(){
+        	location.href = "mini_signup.jsp";
+        }
+        function login(){
+        	location.href = "mini_login.jsp";
+        }
+        function cart(){
+        	location.href = "mini_cart.jsp";
+        }
+        function noCart() {
+        	alert("Please use it after logging in.");
+        	location.href = "mini_login.jsp";
         }
     </script>
 </body>
