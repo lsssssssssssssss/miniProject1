@@ -106,10 +106,15 @@
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-                <script>
+                 <script>
                     $(document).ready(function () {
                         // Show modal on page load
                         $('#myModal').modal('show');
+
+                        // Set a timer to go back to the previous page after 3 seconds (3000 milliseconds)
+                        setTimeout(function() {
+                            history.back();
+                        }, 2000);
                     });
                 </script>
     <%

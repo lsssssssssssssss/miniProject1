@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,29 +26,31 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="#" onclick="home()">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
+                    <a class="nav-link" href="#" onclick="products()">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sign Up</a>
+                    <a class="nav-link" href="#" onclick="signup()">Sign Up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="#" onclick="logout()">Logout</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Cart <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" onclick="cart()">Cart <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
     </nav>
-	<%@ include file="dbconn.jsp"%>
+    <%@ include file="dbconn.jsp"%>
     <%
-    	int idx = 1;
-    	String userid = (String)session.getAttribute("userid");
-    	if(userid == null || userid.trim().isEmpty()) {
-   	%>
+        int idx = 1;
+        int total = 0;
+        
+        String userid = (String)session.getAttribute("userid");
+        if(userid == null || userid.trim().isEmpty()) {
+    %>
        <script>
            function noCart() {
                alert("Please use it after logging in.");
@@ -55,11 +58,10 @@
            }
            noCart();
        </script>
-   	<%
-    	} else {
-	        String sql = "SELECT PRODUCTNAME, QUANTITY, PRICE, TOTALAMOUNT  FROM MINI_CART C INNER JOIN MINI_PRODUCT P ON c.productid = p.productid WHERE USERID = '" + userid + "'";
-	        ResultSet rs = stmt.executeQuery(sql);
-    	}
+    <%
+        }
+        String sql = "SELECT C.PRODUCTID, PRODUCTNAME, QUANTITY, PRICE, TOTALAMOUNT  FROM MINI_CART C INNER JOIN MINI_PRODUCT P ON c.productid = p.productid WHERE USERID = '" + userid + "' ORDER BY C.PRODUCTID";
+        ResultSet rs = stmt.executeQuery(sql);
     %>
     <!-- Your Cart Content Goes Here -->
     <div class="container">
@@ -77,47 +79,64 @@
             </thead>
             <tbody>
                 <!-- Example row, replace with actual cart data -->
+                <%
+                    while(rs.next()){
+                        total += rs.getInt("TOTALAMOUNT");
+                %>
                 <tr>
                     <th scope="row"><%= idx++ %></th>
-                    <td>Treadmill</td>
-                    <td>2</td>
-                    <td>$500</td>
-                    <td>$1000</td>
+                    <td><%= rs.getString("PRODUCTNAME") %></td>
+                    <td><%= rs.getString("QUANTITY") %></td>
+                    <td>$<%= rs.getString("PRICE") %></td>
+                    <td>$<%= rs.getString("TOTALAMOUNT") %></td>
                     <td>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button>
+                        <button type="button" class="btn btn-danger" onclick="fnDelete('<%= rs.getString("PRODUCTID") %>')">Delete</button>
                     </td>
                 </tr>
+                <%
+                    }
+                %>
             </tbody>
         </table>
         <div class="text-right">
-            <p class="font-weight-bold">Total: $1000</p>
-            <button class="btn btn-primary">Checkout</button>
-        </div>
-    </div>
-
-    <!-- Modal for Confirm Delete -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this item from your cart?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                </div>
-            </div>
+            <p class="font-weight-bold">Total: $<%= total %></p>
+            <%
+                if(total != 0){
+            %>
+            <button class="btn btn-primary" onclick="checkout('<%= total %>')">Checkout</button>
+            <%
+                }
+            %>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function fnDelete(productid){
+            location.href = "mini_cart_delete.jsp?productid="+productid;
+        }
+        function home(){
+        	location.href = "mini_home.jsp";
+        }
+        function products(){
+        	location.href = "mini_product.jsp";
+        }
+        function signup(){
+        	location.href = "mini_signup.jsp";
+        }
+        function logout(){
+        	location.href = "mini_logout.jsp";
+        }
+        function cart(){
+        	location.href = "mini_cart.jsp";
+        }
+        
+        function checkout(total) {                 
+            location.href = "mini_checkout.jsp?total="+total;
+        }
+    </script>
 </body>
 </html>
