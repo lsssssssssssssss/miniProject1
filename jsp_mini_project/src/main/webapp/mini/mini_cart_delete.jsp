@@ -23,10 +23,11 @@
            noCart();
        </script>
    	<%
+    	} else {
+		    String sql = "DELETE FROM MINI_CART WHERE USERID = '" + userid + "' AND PRODUCTID = '" + productid + "'";
+		    stmt.executeUpdate(sql);
+		    response.sendRedirect("mini_cart.jsp");
     	}
-	    String sql = "DELETE FROM MINI_CART WHERE USERID = '" + userid + "' AND PRODUCTID = '" + productid + "'";
-	    stmt.executeUpdate(sql);
-	    response.sendRedirect("mini_cart.jsp");
     %>
 </body>
 </html>

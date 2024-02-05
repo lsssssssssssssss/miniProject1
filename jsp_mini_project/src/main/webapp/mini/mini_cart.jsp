@@ -40,6 +40,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#" onclick="cart()">Cart <span class="sr-only">(current)</span></a>
                 </li>
+                <li class="nav-item">
+               				<a class="nav-link" href="#" onclick="orderHistory()">Order History</a>
+            	</li>
             </ul>
         </div>
     </nav>
@@ -128,6 +131,7 @@
         	location.href = "mini_signup.jsp";
         }
         function logout(){
+        	alert("You have been logged out.");
         	location.href = "mini_logout.jsp";
         }
         function cart(){
@@ -136,6 +140,9 @@
         
         function checkout(total) {                 
             location.href = "mini_checkout.jsp?total="+total;
+        }
+        function orderHistory() {
+            location.href = "mini_order.jsp";
         }
     </script>
 </body>

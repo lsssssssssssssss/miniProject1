@@ -39,6 +39,9 @@
 			            <li class="nav-item">
 			                <a class="nav-link" href="#" onclick="cart()">Cart</a>
 			            </li>
+			            <li class="nav-item">
+               				<a class="nav-link" href="#" onclick="orderHistory()">Order History</a>
+            			</li>
 			    <%
 					} else {
 				%>
@@ -195,6 +198,7 @@
         	location.href = "mini_login.jsp";
         }
         function logout(){
+        	alert("You have been logged out.");
         	location.href = "mini_logout.jsp";
         }
         function cart(){
@@ -203,6 +207,9 @@
         function noCart() {
         	alert("Please use it after logging in.");
         	location.href = "mini_login.jsp";
+        }
+        function orderHistory() {
+            location.href = "mini_order.jsp";
         }
     </script>
 </body>

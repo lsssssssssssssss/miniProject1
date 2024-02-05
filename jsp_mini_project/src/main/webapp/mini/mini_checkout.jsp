@@ -10,7 +10,7 @@
 </head>
 <body>
     <%
-        String userid = (String) session.getAttribute("userid");
+        String userid = (String)session.getAttribute("userid");
         String total = request.getParameter("total");
         String sql = "SELECT C.PRODUCTID, PRODUCTNAME, QUANTITY, PRICE, TOTALAMOUNT  FROM MINI_CART C INNER JOIN MINI_PRODUCT P ON c.productid = p.productid WHERE USERID = '"
                 + userid + "' ORDER BY C.PRODUCTID";
@@ -45,8 +45,17 @@
                 pstmt2.setInt(4, rs.getInt("PRICE"));
                 pstmt2.setInt(5, rs.getInt("TOTALAMOUNT"));
                 pstmt2.executeUpdate();
+                String sql4 = "UPDATE MINI_PRODUCT SET STOCKQUANTITY = STOCKQUANTITY - ? WHERE PRODUCTID = ?";
+                PreparedStatement pstmt3 = conn.prepareStatement(sql4);
+                pstmt3.setInt(1, rs.getInt("QUANTITY"));
+                pstmt3.setInt(2, rs.getInt("PRODUCTID"));
+                pstmt3.executeUpdate();
             }
         }
+        String sql5 = "DELETE FROM MINI_CART WHERE USERID = ?";
+        PreparedStatement pstmt4 = conn.prepareStatement(sql5);
+        pstmt4.setString(1, userid);
+        pstmt4.executeUpdate();
     }
     %>
     <!-- Bootstrap JavaScript and jQuery -->

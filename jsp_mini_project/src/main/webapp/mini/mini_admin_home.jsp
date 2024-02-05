@@ -23,8 +23,23 @@
 </head>
 
 <body>
+	<%
+	String userid = (String)session.getAttribute("userid");
+	String status = (String)session.getAttribute("status");
+	    if(userid == null || userid.trim().isEmpty() || !status.equals("A")) {
+    %>
+        <script>
+            function noCart() {
+                alert("Please use it after logging in.");
+                location.href = "mini_login.jsp";
+            }
+            noCart();
+        </script>
+    <%
+	    }
+    %>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Fitness Shop</a>
+        <a class="navbar-brand" href="#">Fitness Shop Admin</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -35,13 +50,13 @@
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Products List</a>
+                    <a class="nav-link" href="#" onclick="productList()">Product List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">User List</a>
+                    <a class="nav-link" href="#" onclick="userList()">User List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Order List</a>
+                    <a class="nav-link" href="#" onclick="orderList()">Order History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="logout()">Logout</a>
@@ -111,8 +126,18 @@
             });
         });
         
-        function logout() {
+        function logout(){
+        	alert("You have been logged out.");
             location.href = "mini_logout.jsp";
+        }
+        function productList(){
+        	location.href = "mini_product_list.jsp";
+        }
+        function userList(){
+        	location.href = "mini_user_list.jsp";
+        }
+        function orderList(){
+        	location.href = "mini_order_list.jsp";
         }
     </script>
 
