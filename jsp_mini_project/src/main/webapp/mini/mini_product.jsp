@@ -59,7 +59,7 @@
     </nav>
     <%@ include file="dbconn.jsp"%>
     <%
-        String sql = "SELECT * FROM MINI_PRODUCT";
+        String sql = "SELECT * FROM MINI_PRODUCT ORDER BY PRODUCTID";
         ResultSet rs = stmt.executeQuery(sql);
         ResultSet rs2;
         // 값 전달을 위해 productImageName 변수를 사용
@@ -67,7 +67,7 @@
     %>
     <div class="container mt-4">
         <h2>Product Purchase</h2>
-        <form name="product" action="mini_order.jsp" onsubmit="return purchase()">
+        <form name="product">
             <div class="form-group">
                 <label for="productName">Product Name</label>
                 <select class="form-control" id="productName" onchange="changeImage(); totalPrice(); updateStockQuantity()">
@@ -103,7 +103,7 @@
                 <span id="stockQuantity">0</span>
             </div>
             <input type="text" id="productid" hidden>
-            <button type="submit" class="btn btn-primary">Purchase</button>
+            <button type="button" class="btn btn-primary" onclick="purchase()">Purchase</button>
             <a href="#" class="btn btn-success ml-2" onclick="addCart()">Add to Cart</a>
         </form>
     </div>
@@ -157,13 +157,19 @@
             var productName = document.getElementById('productName');
             var quantity = document.getElementById('quantity').value;
             var stockQuantity = document.getElementById('stockQuantity').innerText;
+            var selectedOption = productName.options[productName.selectedIndex];
+            
+            var confirmation = confirm('Do you want to purchase this item?');
 
-            if (parseInt(quantity) > parseInt(stockQuantity)) {
-                alert('Cannot purchase more than available stock.');
-                return false;
+            if (confirmation) {
+	            if (parseInt(quantity) > parseInt(stockQuantity)) {
+	                alert('Cannot purchase more than available stock.');
+	                return;
+	            }
+	            location.href = "mini_purchase.jsp?productid="+document.getElementById('productid').value+"&quantity="+document.getElementById('quantity').value+"&totalamount="+selectedOption.getAttribute('data-price');
+            } else {
+                return;
             }
-
-            return true;
         }
         
         function addCart(){

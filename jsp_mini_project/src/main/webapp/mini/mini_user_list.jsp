@@ -30,13 +30,16 @@
     %>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Fitness Shop</a>
+        <a class="navbar-brand" href="#">Fitness Shop Admin</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="home()">Home</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="productList()">Product List</a>
                 </li>
@@ -54,7 +57,7 @@
     </nav>
 
     <div class="container mt-4">
-        <h2>User List</h2>
+        <h2>User List - Admin</h2>
 
         <!-- User Table -->
         <table class="table">
@@ -82,13 +85,23 @@
                             <td><%= rs.getString("ADDRESS") %></td>
                             <td><%= rs.getString("PHONE") %></td>
                             <td>
-                                <!-- Link to the user's profile/edit page -->
-                                <a href="editUser.jsp?userid=<%= rs.getString("USERID") %>" class="btn btn-warning btn-sm">Edit</a>
-                                <!-- Add more actions as needed -->
+                            <%
+                            	if(rs.getString("USERID").equals("admin")){
+                            %>
+                            		<button class="btn btn-warning btn-sm" onclick="fnEdit('<%= rs.getString("USERID") %>')">Edit</button>
+                            <%
+                            	} else {
+                            %>
+                                	<button class="btn btn-warning btn-sm" onclick="fnEdit('<%= rs.getString("USERID") %>')">Edit</button>
+                        			<button class="btn btn-danger btn-sm" onclick="fnDelete('<%= rs.getString("USERID") %>')">Delete</button>
+                            <%
+                            	}
+                            %>
                             </td>
                         </tr>
                 <%
                     }
+        		}
                 %>
             </tbody>
         </table>
@@ -100,6 +113,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
+   	 	function home() {
+    		location.href = "mini_admin_home.jsp";
+    	
+   	 	}
         function logout() {
         	alert("You have been logged out.");
             location.href = "mini_logout.jsp";
@@ -116,10 +133,15 @@
         function orderList() {
             location.href = "mini_order_list.jsp";
         }
-    </script>
-
-    <%
+        
+        function fnEdit(userid) {
+        	location.href = "mini_user_edit.jsp?userid="+userid;
         }
-    %>
+        
+        function fnDelete(userid) {
+        	alert("completed");
+        	location.href = "mini_user_delete.jsp?userid="+userid;
+        }
+    </script>
 </body>
 </html>

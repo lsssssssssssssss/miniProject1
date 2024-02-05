@@ -12,7 +12,7 @@
     <%
         String userid = (String)session.getAttribute("userid");
         String total = request.getParameter("total");
-        String sql = "SELECT C.PRODUCTID, PRODUCTNAME, QUANTITY, PRICE, TOTALAMOUNT  FROM MINI_CART C INNER JOIN MINI_PRODUCT P ON c.productid = p.productid WHERE USERID = '"
+        String sql = "SELECT C.PRODUCTID, PRODUCTNAME, QUANTITY, PRICE, TOTALAMOUNT FROM MINI_CART C INNER JOIN MINI_PRODUCT P ON c.productid = p.productid WHERE USERID = '"
                 + userid + "' ORDER BY C.PRODUCTID";
         ResultSet rs = stmt.executeQuery(sql);
         if (userid == null || userid.trim().isEmpty()) {

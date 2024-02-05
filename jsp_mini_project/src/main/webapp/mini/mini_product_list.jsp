@@ -43,7 +43,7 @@
             	<li class="nav-item">
                     <a class="nav-link" href="#" onclick="home()">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="#" onclick="productList()">Product List</a>
                 </li>
                 <li class="nav-item">
@@ -109,7 +109,7 @@
                     <label for="stockQuantity">Stock Quantity:</label>
                     <input type="number" min="0" class="form-control" id="stockQuantity" name="stockQuantity" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Product</button>
+                <button style="margin-bottom : 50px" type="submit" class="btn btn-primary">Add Product</button>
             </form>
         </div>
     </div>

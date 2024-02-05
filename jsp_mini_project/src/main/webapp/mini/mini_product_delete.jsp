@@ -22,10 +22,15 @@
             redirectToLogin();
         </script>
     <%
+        } else {
+	        String productid = request.getParameter("productid");
+	        String sql = "DELETE FROM MINI_PRODUCT WHERE PRODUCTID = '" + productid + "'";
+	        stmt.executeUpdate(sql);
         }
-        String productid = request.getParameter("productid");
-        String sql = "SELECT * FROM MINI_PRODUCT ORDER BY PRODUCTID";
-        ResultSet rs = stmt.executeQuery(sql);
     %>
+    <script>
+    	alert("completed");
+    	location.href = "mini_product_list.jsp";
+    </script>
 </body>
 </html>

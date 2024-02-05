@@ -15,7 +15,7 @@
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String address = request.getParameter("address");
-        String detailAddress = request.getParameter("detailAddress");
+        String detailAddress = " " + request.getParameter("detailAddress");
         String phone1 = request.getParameter("phone1");
         String phone2 = request.getParameter("phone2");
         String phone3 = request.getParameter("phone3");

@@ -62,9 +62,9 @@
            noCart();
        </script>
     <%
-        }
-        String sql = "SELECT C.PRODUCTID, PRODUCTNAME, QUANTITY, PRICE, TOTALAMOUNT  FROM MINI_CART C INNER JOIN MINI_PRODUCT P ON c.productid = p.productid WHERE USERID = '" + userid + "' ORDER BY C.PRODUCTID";
-        ResultSet rs = stmt.executeQuery(sql);
+        } else {
+	        String sql = "SELECT C.PRODUCTID, PRODUCTNAME, QUANTITY, PRICE, TOTALAMOUNT  FROM MINI_CART C INNER JOIN MINI_PRODUCT P ON c.productid = p.productid WHERE USERID = '" + userid + "' ORDER BY C.PRODUCTID";
+	        ResultSet rs = stmt.executeQuery(sql);
     %>
     <!-- Your Cart Content Goes Here -->
     <div class="container">
@@ -109,6 +109,7 @@
             <button class="btn btn-primary" onclick="checkout('<%= total %>')">Checkout</button>
             <%
                 }
+        	}
             %>
         </div>
     </div>
