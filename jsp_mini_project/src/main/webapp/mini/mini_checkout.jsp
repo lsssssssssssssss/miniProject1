@@ -87,6 +87,9 @@
         $(document).ready(function() {
             // Show modal on page load
             $('#orderModal').modal('show');
+            setTimeout(function() {
+            	location.href = "mini_order.jsp";
+            }, 2000);
         });
 
         function redirectToOrderPage() {

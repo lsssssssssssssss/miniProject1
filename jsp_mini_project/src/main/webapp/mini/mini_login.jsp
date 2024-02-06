@@ -37,6 +37,9 @@
 			            <li class="nav-item">
                				<a class="nav-link" href="#" onclick="orderHistory()">Order History</a>
             			</li>
+            			<li class="nav-item">
+			                <a class="nav-link" href="#" onclick="editProfile()">Edit Profile</a>
+			            </li>
 			    <%
 					} else {
 				%>
@@ -91,8 +94,13 @@
 	    	alert("Please use it after logging in.");
 	    	location.href = "mini_login.jsp";
 	    }
+	    
 	    function orderHistory() {
             location.href = "mini_order.jsp";
+        }
+	    
+	    function editProfile() {
+        	location.href = "mini_edit_profile.jsp";
         }
 	</script>
 </body>

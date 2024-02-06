@@ -25,7 +25,12 @@
     <%
         } else {
             // Retrieve the user list from the database
-            String sql = "SELECT * FROM MINI_USER";
+            String searchUserId = request.getParameter("searchUserId");
+			// 사용자가 검색어를 입력한 경우에만 WHERE 절 추가
+			String sql = "SELECT * FROM MINI_USER";
+			if (searchUserId != null && !searchUserId.isEmpty()) {
+			    sql += " WHERE USERID LIKE '%" + searchUserId + "%'";
+			}
             ResultSet rs = stmt.executeQuery(sql);
     %>
 
@@ -58,7 +63,13 @@
 
     <div class="container mt-4">
         <h2>User List - Admin</h2>
-
+		<form method="get" action="mini_user_list.jsp" class="form-inline mb-4">
+	        <div class="form-group mr-2">
+	            <label for="searchUserId" class="mr-2">Search by User ID:</label>
+	            <input type="text" class="form-control" id="searchUserId" name="searchUserId">
+	        </div>
+	        <button type="submit" class="btn btn-primary">Search</button>
+   		</form>
         <!-- User Table -->
         <table class="table">
             <thead>

@@ -55,6 +55,9 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#" onclick="orderHistory()">Order History <span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item">
+			            <a class="nav-link" href="#" onclick="editProfile()">Edit Profile</a>
+			        </li>
                 <% } else { %>
                     <li class="nav-item">
                         <a class="nav-link" href="#" onclick="noCart()">Cart</a>
@@ -68,11 +71,11 @@
     </nav>
     <div class="container mt-4">
         <h2>Order History</h2>
-        <%
+        <% 
             while (rs.next()) {
                 int orderId = rs.getInt("ORDERID");
                 int quantity = rs.getInt("QUANTITY");
-
+                
                 int rowCount = orderRowCountMap.getOrDefault(orderId, 0);
 
                 if (orderId != prevOrderId) {
@@ -147,6 +150,10 @@
 
         function orderHistory() {
             location.href = "mini_order.jsp";
+        }
+        
+        function editProfile() {
+        	location.href = "mini_edit_profile.jsp";
         }
     </script>
 </body>

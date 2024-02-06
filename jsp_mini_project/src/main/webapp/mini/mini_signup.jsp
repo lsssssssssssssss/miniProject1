@@ -35,6 +35,9 @@
 			            <li class="nav-item">
                				<a class="nav-link" href="#" onclick="orderHistory()">Order History</a>
             			</li>
+            			<li class="nav-item">
+			                <a class="nav-link" href="#" onclick="editProfile()">Edit Profile</a>
+			            </li>
 			    <%
 					} else {
 				%>
@@ -216,6 +219,9 @@
         }
         function orderHistory() {
             location.href = "mini_order.jsp";
+        }
+        function editProfile() {
+        	location.href = "mini_edit_profile.jsp";
         }
 	</script>
 </body>

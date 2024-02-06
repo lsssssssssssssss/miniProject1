@@ -12,7 +12,8 @@
     <%@ include file="dbconn.jsp"%>
     <%
         String userid = (String)session.getAttribute("userid");
-        if (userid == null || userid.trim().isEmpty()) {
+        String status = (String)session.getAttribute("status");
+        if (userid == null || userid.trim().isEmpty() || !status.equals("A")) {
     %>
         <script>
             function noCart() {
@@ -23,7 +24,16 @@
         </script>
     <%
         } else {
-            String sql = "SELECT O.USERID, O.ORDERID, ORDERDATE, TOTALAMOUNT, PRODUCTNAME, QUANTITY, D.PRICE, SUBTOTAL FROM MINI_ORDER O INNER JOIN MINI_ORDERDETAIL D ON o.orderid = d.orderid INNER JOIN MINI_PRODUCT P ON d.productid = p.productid ORDER BY O.ORDERID, D.PRODUCTID";
+        	String searchUserId = request.getParameter("searchUserId"); // 검색어 받기
+
+            String sql = "SELECT O.USERID, O.ORDERID, ORDERDATE, TOTALAMOUNT, PRODUCTNAME, QUANTITY, D.PRICE, SUBTOTAL FROM MINI_ORDER O INNER JOIN MINI_ORDERDETAIL D ON o.orderid = d.orderid INNER JOIN MINI_PRODUCT P ON d.productid = p.productid";
+
+            // 검색어가 존재할 경우 WHERE 절 추가
+            if (searchUserId != null && !searchUserId.trim().isEmpty()) {
+                sql += " WHERE O.USERID LIKE '%" + searchUserId + "%'";
+            }
+
+            sql += " ORDER BY O.ORDERID, D.PRODUCTID";
 
             ResultSet rs = stmt.executeQuery(sql);
             Map<Integer, Integer> orderRowCountMap = new HashMap<>();
@@ -55,7 +65,14 @@
         </div>
     </nav>
     <div class="container mt-4">
-        <h2>Order History</h2>
+        <h2>Order History - Admin</h2>
+		<form method="get" action="mini_order_list.jsp" class="form-inline mb-4">
+	        <div class="form-group mr-2">
+	            <label for="searchUserId" class="mr-2">Search by User ID:</label>
+	            <input type="text" class="form-control" id="searchUserId" name="searchUserId">
+	        </div>
+	        <button type="submit" class="btn btn-primary">Search</button>
+   		</form>
         <%
             while (rs.next()) {
                 int orderId = rs.getInt("ORDERID");

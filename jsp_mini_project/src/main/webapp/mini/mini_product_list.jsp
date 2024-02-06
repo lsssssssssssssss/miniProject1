@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Admin - Product List</title>
+    <title>Product List</title>
     <style>
         /* Add your custom styles here */
     </style>
@@ -29,7 +29,13 @@
         </script>
     <%
         }
-        String sql = "SELECT * FROM MINI_PRODUCT ORDER BY PRODUCTID";
+        String searchProductName = request.getParameter("searchProductName");
+	    // 사용자가 검색어를 입력한 경우에만 WHERE 절 추가
+	    String sql = "SELECT * FROM MINI_PRODUCT";
+	    if (searchProductName != null && !searchProductName.isEmpty()) {
+	        sql += " WHERE PRODUCTNAME LIKE '%" + searchProductName + "%'";
+	    }
+	    sql += " ORDER BY PRODUCTID";
         ResultSet rs = stmt.executeQuery(sql);
     %>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -61,7 +67,13 @@
 
     <div class="container mt-4">
         <h2>Product List - Admin</h2>
-
+		<form method="get" action="mini_product_list.jsp" class="form-inline mb-4">
+	        <div class="form-group mr-2">
+	            <label for="searchProductName" class="mr-2">Search by Product Name:</label>
+	            <input type="text" class="form-control" id="searchProductName" name="searchProductName">
+	        </div>
+	        <button type="submit" class="btn btn-primary">Search</button>
+    	</form>
         <!-- Product Table -->
         <table class="table">
             <thead>
