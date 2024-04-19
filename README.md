@@ -1,9 +1,9 @@
 <div align="center">
-    <img src="![fit1](https://github.com/lsssssssssssssss/miniProject1/assets/153085551/99e18480-bcf9-4059-b0cd-75f2e4236621)" />
+    <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/99e18480-bcf9-4059-b0cd-75f2e4236621" />
     </div>
     
 <div align="center">
-    <img src="![fit1](https://github.com/lsssssssssssssss/miniProject1/assets/153085551/99e18480-bcf9-4059-b0cd-75f2e4236621)" style="width:600px;">
+    <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/99e18480-bcf9-4059-b0cd-75f2e4236621" style="width:600px;">
     </div> 
 <div style="font-weight: 700; font-size: 15px; text-align: center; color: #282d33;" align="center">  
     </div> 
