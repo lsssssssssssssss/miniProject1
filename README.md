@@ -56,9 +56,8 @@
     <div style= "text-align:left;">
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">  📑 페이지별 기능 </h2>
     <div align="center">
-    <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/99e18480-bcf9-4059-b0cd-75f2e4236621" width="300px;" />
-    <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/edf81f10-cee7-4748-b86a-45a002c29a17" width="300px;" />
-    <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/5b084d20-7999-447c-b7b9-e9e19f68410e" width="300px;" />
+    <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/edf81f10-cee7-4748-b86a-45a002c29a17" width="400px;" />
+    <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/5b084d20-7999-447c-b7b9-e9e19f68410e" width="200px;" />
     </div>
     </div>
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 🎇 프로젝트 후기 </h2>       
