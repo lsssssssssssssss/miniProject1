@@ -40,7 +40,7 @@
         </div>
 <div style= "text-align:left;">
     <h2 style="color: #282d33;"> 🛠️ 사용 언어 </h2>
-    <div style="margin: 0 auto; text-align: left;" align= "left"> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
+    <div style="margin: 0 auto; text-align: left;" align= "left">
           <img src="https://img.shields.io/badge/JSP-007396?style=for-the-badge&logo=java&logoColor=white">
           <img src="https://img.shields.io/badge/Servlet-000000?style=for-the-badge&logo=java&logoColor=white">
           <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white">
