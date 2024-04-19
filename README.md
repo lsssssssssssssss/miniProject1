@@ -39,8 +39,6 @@
             </tr>
             </table>
         </div>
-
-
 <div style= "text-align:left;">
     <h2 style="color: #282d33;"> 🛠️ 사용 언어 </h2>
     <div style="margin: 0 auto; text-align: left;" align= "left"> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
@@ -52,15 +50,7 @@
           <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white">
           <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white">
           </div>
-    </div>
-    <div style= "text-align:left;">
-    <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 📕 발표 PPT </h2>  
-        <a href="https://docs.google.com/presentation/d/1F4bodDgNgG5s8ovWm_vM8CS3e3GtrGpu/edit?usp=sharing&ouid=117668902424628902239&rtpof=true&sd=true" target="_blank">▶FOOD114 발표 PPT</a>
-       </div>          
-    <div style= "text-align:left;">
-    <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 🎞 시연 영상 </h2>    
-        <a href="https://www.youtube.com/watch?v=WK8oGLTJD_Y">▶FOOD114 시연영상</a>
-    </div>
+    </div>         
     <div style= "text-align:left;">
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">  📑 페이지별 기능 </h2>      
     </div>
