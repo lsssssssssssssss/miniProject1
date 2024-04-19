@@ -8,10 +8,9 @@
     </div> 
 <div style= "text-align:left;">
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">💡 프로젝트 소개 </h2>
-    <li>FOOD114는 요식업체들의 이벤트들을 소개해주어 바쁜 현대인들의 식비를 조금이라도 줄일 수 있는 기회를 드리는 웹사이트입니다.</li>
-    <li>고객이 주소를 지정하면 주변 이벤트들을 확인이 가능하며 희망하는 가게의 상품 주문이 가능합니다</li>
-    <li>지도를 이용하여 보다 편리하게 업체 조회가 가능합니다</li>
-    <li>업체에서는 본인의 가게를 등록하여 판매 상품 관리가 가능하고 이벤트를 등록하여 홍보효과도 기대 할 수 있습니다.</li>
+    <li>Fitness Shop은 고객 관리 시스템을 목표로 설계한 운동기구 쇼핑몰 사이트입니다.</li>
+    <li>여러 종류의 운동기구와 수량을 선택하여 간편하게 주문이 가능합니다.</li>
+    <li>관리자 페이지에서 간편하게 제품, 고객, 주문 조회 수정 및 삭제가 가능합니다</li>
     </div>
     <div style= "text-align:left;">
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 🗓 개발 기간 </h2>  
@@ -42,13 +41,14 @@
 <div style= "text-align:left;">
     <h2 style="color: #282d33;"> 🛠️ 사용 언어 </h2>
     <div style="margin: 0 auto; text-align: left;" align= "left"> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">
-          <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=Vue.js&logoColor=white">
-          <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
-          <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white">
-          <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white">
-          <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">
-          <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white">
-          <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white">
+          <img src="https://img.shields.io/badge/JSP-007396?style=for-the-badge&logo=java&logoColor=white">
+          <img src="https://img.shields.io/badge/Servlet-000000?style=for-the-badge&logo=java&logoColor=white">
+          <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+          <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+          <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+          <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white">
+          <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
+          <img src="https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white">
           </div>
     </div>         
     <div style= "text-align:left;">
