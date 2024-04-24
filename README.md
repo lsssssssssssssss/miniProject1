@@ -59,7 +59,8 @@
     <h4>메인 페이지</h4>
     <div>미로그인 상태와 로그인 상태, 관리자 로그인 상태의 탭들을 달리하여 세션이 존재할 시에만 보이는 탭들을 구분했습니다. 관리자로 로그인 시 로고 텍스트와 내비게이션 바의 탭들을 수정해서 쉽게 관리할 수 있고, 일반 고객은 관리자 페이지에 접근할 수 없게 구현했고, 세션을 통해 관리자와 일반 고객을 구분하도록 구현하였습니다. BootStrap을 이용한 미디어쿼리를 적용해 상단 탭을 축소하여 구현했고, 클릭시 한눈에 볼 수 있게 탭 내비게이션을 적용했습니다. 섹션 부분에는 Bootstrap과 Jquery를 이용해 자동 슬라이드를 구현하였습니다.</div>
     </div>
-    <br>
+    <br />
+    <br />
     <div align="center">
     <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/7baf3554-2b6c-4bb0-97f0-a4a757764d86" width="200px;" />
     <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/d4804224-2b2f-4110-b380-7260a0575810" width="200px;" />
@@ -68,7 +69,8 @@
     <h4>고객 페이지</h4>
     <div>회원가입 시 팝업창을 통한 아이디 중복체크와 패스워드는 정규식을 만족해야만 회원가입이 완료되게 구현하였고, 다음 API를 이용한 주소검색 팝업창을 통해 주소를 입력받게 구현하였습니다. 제품 페이지에서는 제품리스트를 선택할 수 있게 구현하였고, 제품 이미지와 수량, 제품 총액이 실시간으로 변경되게 구현하였습니다. 장바구니 버튼으로 장바구니로 이동을 통해 여러 제품을 한번에 구매 가능하게 구현하였고, 주문 완료시 제품 재고가 감소되게 구현하였습니다. 주문 내역 페이지에서는 총 주문내역이 모두 나오게 구현하였고, 프로필 수정페이지를 통한 개인정보를 수정할 수 있게 구현하였습니다. 로그아웃 클릭시에는 세션이 끊기고 메인페이지로 이동되게 구현하였습니다.</div>
     </div>
-    <br>
+    <br />
+    <br />
     <div align="center">
     <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/52e3a790-267b-45b7-b79f-33eaa97faaf9" width="266px;" />
     <img src="https://github.com/lsssssssssssssss/miniProject1/assets/153085551/4f7af30a-7def-4298-8910-6e05b49ba91a" width="266px;" />
